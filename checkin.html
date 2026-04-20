@@ -4,29 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
 <title>Check-in Asistencia</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #eef2ff; min-height: 100vh; margin: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #eef2ff; min-height: 100vh; margin: 0; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-@keyframes pop    { 0%{transform:scale(.85);opacity:0} 65%{transform:scale(1.04)} 100%{transform:scale(1);opacity:1} }
+@keyframes pop { 0%{transform:scale(.85);opacity:0} 65%{transform:scale(1.04)} 100%{transform:scale(1);opacity:1} }
 .fade-up { animation: fadeUp .4s ease both; }
-.pop     { animation: pop .4s cubic-bezier(.22,1,.36,1) both; }
+.pop { animation: pop .4s cubic-bezier(.22,1,.36,1) both; }
 </style>
 </head>
 <body>
 
-<!-- CARGANDO -->
 <div id="s-loading" class="flex items-center justify-center min-h-screen">
   <div class="text-center">
     <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-    <p id="loading-txt" class="text-slate-500 text-sm">Cargando datos del alumno…</p>
+    <p class="text-slate-500 text-sm">Cargando...</p>
   </div>
 </div>
 
-<!-- PRINCIPAL -->
 <div id="s-main" class="hidden flex items-center justify-center min-h-screen p-4">
 <div class="w-full max-w-sm fade-up">
   <div class="rounded-3xl text-white text-center px-6 pt-8 pb-10 shadow-xl bg-gradient-to-br from-blue-600 to-indigo-700 relative overflow-hidden">
@@ -36,19 +33,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <h1 id="nombre" class="text-2xl font-bold"></h1>
     <p id="alu-id" class="text-white/50 text-xs mt-1 font-mono"></p>
   </div>
-
   <div class="bg-white rounded-3xl shadow-lg mt-4 p-5 space-y-4">
     <div id="geo-box" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm bg-amber-50 border border-amber-200 text-amber-800">
       <span class="flex-shrink-0">📍</span>
-      <span id="geo-txt">Obteniendo ubicación GPS…</span>
+      <span id="geo-txt">Obteniendo GPS...</span>
     </div>
     <div class="grid grid-cols-2 gap-3">
       <button id="btn-e" onclick="registrar('Entrada')" disabled
-        class="flex flex-col items-center gap-2 bg-emerald-500 text-white font-bold rounded-2xl py-6 text-sm shadow-lg shadow-emerald-200 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-transform">
+        class="flex flex-col items-center gap-2 bg-emerald-500 text-white font-bold rounded-2xl py-6 text-sm shadow-lg disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-transform">
         <span class="text-4xl">✅</span>ENTRADA
       </button>
       <button id="btn-s" onclick="registrar('Salida')" disabled
-        class="flex flex-col items-center gap-2 bg-rose-500 text-white font-bold rounded-2xl py-6 text-sm shadow-lg shadow-rose-200 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-transform">
+        class="flex flex-col items-center gap-2 bg-rose-500 text-white font-bold rounded-2xl py-6 text-sm shadow-lg disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-transform">
         <span class="text-4xl">🚪</span>SALIDA
       </button>
     </div>
@@ -58,7 +54,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 </div>
 </div>
 
-<!-- ÉXITO -->
 <div id="s-ok" class="hidden fixed inset-0 bg-indigo-50 flex items-center justify-center p-4 z-50">
 <div class="w-full max-w-sm pop">
   <div id="ok-banner" class="rounded-3xl text-white text-center px-6 pt-8 pb-10 shadow-xl">
@@ -70,7 +65,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <div class="divide-y divide-slate-100 rounded-2xl bg-slate-50 overflow-hidden text-sm">
       <div class="flex justify-between px-4 py-3"><span class="text-slate-500">Alumno/a</span><span class="font-semibold" id="ok-nombre"></span></div>
       <div class="flex justify-between px-4 py-3"><span class="text-slate-500">Tipo</span><span class="font-bold" id="ok-tipo"></span></div>
-      <div class="flex justify-between px-4 py-3"><span class="text-slate-500">Fecha y hora</span><span class="font-mono text-xs font-semibold" id="ok-fecha"></span></div>
+      <div class="flex justify-between px-4 py-3"><span class="text-slate-500">Hora</span><span class="font-mono text-xs font-semibold" id="ok-fecha"></span></div>
       <div class="flex justify-between px-4 py-3"><span class="text-slate-500">Distancia</span><span class="font-semibold text-emerald-600" id="ok-dist"></span></div>
     </div>
     <button onclick="volver()" class="w-full bg-blue-600 text-white font-bold rounded-2xl py-4 active:scale-95 transition-transform">
@@ -80,7 +75,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 </div>
 </div>
 
-<!-- 404 -->
 <div id="s-404" class="hidden fixed inset-0 bg-red-50 flex items-center justify-center p-4 z-50">
 <div class="w-full max-w-sm bg-white rounded-3xl shadow-xl p-8 text-center pop">
   <div class="text-6xl mb-4">❌</div>
@@ -91,33 +85,30 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 </div>
 
 <script>
-// ── URL de tu Apps Script Web App ────────────────────────────
-var API="https://script.google.com/macros/s/AKfycbwP5r-2070EB3u4plIRwgf5MtPy21uEq7gbO8CxQxBeWK8X9irzQX-OVfrSVupV6AwG/exec";
-  
-var alumno = null;
-var gLat = null, gLng = null, geoListo = false;
-var cbCount = 0;
+// ── URL DE LA WEB APP DE APPS SCRIPT ─────────────────────────
+var API = "https://script.google.com/macros/s/AKfycbwP5r-2070EB3u4plIRwgf5MtPy21uEq7gbO8CxQxBeWK8X9irzQX-OVfrSVupV6AwG/exec";
 
-// ── JSONP: evita CORS 100% ───────────────────────────────────
+var alumno = null, gLat = null, gLng = null, geoListo = false, cbCount = 0;
+
 function jsonp(url, cb) {
-  var name = "_cb" + (++cbCount);
-  window[name] = function(data) {
-    delete window[name];
-    document.head.removeChild(document.getElementById(name));
-    cb(null, data);
+  var n = "_cb" + (++cbCount);
+  window[n] = function(d) {
+    delete window[n];
+    var s = document.getElementById(n);
+    if (s) document.head.removeChild(s);
+    cb(null, d);
   };
   var s = document.createElement("script");
-  s.id  = name;
-  s.src = url + "&callback=" + name;
+  s.id = n;
+  s.src = url + "&callback=" + n;
   s.onerror = function() {
-    delete window[name];
-    document.head.removeChild(s);
+    delete window[n];
+    if (s.parentNode) document.head.removeChild(s);
     cb(new Error("Error de red"));
   };
   document.head.appendChild(s);
 }
 
-// ── Init ──────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function() {
   var id = new URLSearchParams(window.location.search).get('id');
   if (!id) { mostrar404('Sin ID en la URL'); return; }
@@ -129,73 +120,63 @@ window.addEventListener('DOMContentLoaded', function() {
     document.getElementById('alu-id').textContent = '# ' + alumno.id;
     var pts = alumno.nombre.trim().split(' ');
     document.getElementById('avatar').textContent =
-      pts.length >= 2 ? (pts[0][0]+pts[1][0]).toUpperCase() : alumno.nombre.substring(0,2).toUpperCase();
+      pts.length >= 2 ? (pts[0][0] + pts[1][0]).toUpperCase() : alumno.nombre.substring(0,2).toUpperCase();
     ocultar('s-loading');
     mostrar('s-main');
     pedirGPS();
   });
 });
 
-// ── GPS ───────────────────────────────────────────────────────
 function pedirGPS() {
-  if (!navigator.geolocation) { setGeo('error','❌ Tu navegador no soporta GPS.'); return; }
-  setGeo('carga','📍 Obteniendo ubicación GPS…');
+  if (!navigator.geolocation) { setGeo('error', '❌ GPS no soportado.'); return; }
+  setGeo('carga', '📍 Obteniendo ubicación GPS...');
   navigator.geolocation.getCurrentPosition(
-    function(pos) {
-      gLat = pos.coords.latitude; gLng = pos.coords.longitude; geoListo = true;
-      setGeo('ok','✅ Ubicación lista (±' + Math.round(pos.coords.accuracy) + ' m)');
+    function(p) {
+      gLat = p.coords.latitude; gLng = p.coords.longitude; geoListo = true;
+      setGeo('ok', '✅ GPS listo (±' + Math.round(p.coords.accuracy) + ' m)');
       habilitarBtns(true);
     },
-    function(err) {
-      var m = '❌ Permiso GPS denegado. Actívalo en ajustes del navegador.';
-      if (err.code===2) m = '📡 GPS no disponible. Activa la ubicación.';
-      if (err.code===3) m = '⏱ Tiempo GPS agotado. Recarga la página.';
+    function(e) {
+      var m = e.code === 1 ? '❌ GPS denegado. Actívalo en ajustes.' :
+               e.code === 2 ? '📡 GPS no disponible.' : '⏱ Tiempo agotado. Recarga.';
       setGeo('error', m);
     },
-    { enableHighAccuracy:true, timeout:15000, maximumAge:0 }
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
   );
 }
 
-function setGeo(tipo, txt) {
+function setGeo(t, txt) {
   var el = document.getElementById('geo-box');
   document.getElementById('geo-txt').textContent = txt;
   el.className = 'flex items-center gap-3 rounded-2xl px-4 py-3 text-sm border ';
-  if (tipo==='ok')    el.className += 'bg-emerald-50 border-emerald-200 text-emerald-800';
-  if (tipo==='error') el.className += 'bg-rose-50 border-rose-200 text-rose-800';
-  if (tipo==='carga') el.className += 'bg-amber-50 border-amber-200 text-amber-800';
+  el.className += t === 'ok'    ? 'bg-emerald-50 border-emerald-200 text-emerald-800' :
+                  t === 'error' ? 'bg-rose-50 border-rose-200 text-rose-800' :
+                                  'bg-amber-50 border-amber-200 text-amber-800';
 }
 
-// ── Registrar ─────────────────────────────────────────────────
 function registrar(tipo) {
-  if (!geoListo) { showMsg('error','Activa el GPS primero y espera a que se detecte.'); return; }
+  if (!geoListo) { showMsg('error', 'Activa el GPS primero.'); return; }
   habilitarBtns(false);
-  showMsg('info','⏳ Registrando asistencia…');
-
-  var url = API
-    + "?action=checkin"
-    + "&id="   + encodeURIComponent(alumno.id)
-    + "&tipo=" + encodeURIComponent(tipo)
-    + "&lat="  + gLat
-    + "&lng="  + gLng;
-
-  jsonp(url, function(err, data) {
-    habilitarBtns(true); hideMsg();
-    if (err)      { showMsg('error','Error de conexión. Inténtalo de nuevo.'); return; }
-    if (data.ok)  mostrarExito(data);
-    else          showMsg('error', data.msg || 'Error desconocido.');
-  });
+  showMsg('info', '⏳ Registrando asistencia...');
+  jsonp(API + "?action=checkin&id=" + encodeURIComponent(alumno.id) +
+    "&tipo=" + encodeURIComponent(tipo) + "&lat=" + gLat + "&lng=" + gLng,
+    function(err, data) {
+      habilitarBtns(true); hideMsg();
+      if (err) { showMsg('error', 'Error de conexión. Inténtalo de nuevo.'); return; }
+      if (data.ok) mostrarExito(data);
+      else showMsg('error', data.msg || 'Error desconocido.');
+    }
+  );
 }
 
-// ── Pantalla éxito ────────────────────────────────────────────
 function mostrarExito(r) {
-  var entrada = r.tipo === 'Entrada';
+  var e = r.tipo === 'Entrada';
   document.getElementById('ok-banner').className =
     'rounded-3xl text-white text-center px-6 pt-8 pb-10 shadow-xl ' +
-    (entrada ? 'bg-gradient-to-br from-emerald-500 to-teal-600'
-             : 'bg-gradient-to-br from-rose-500 to-pink-600');
-  document.getElementById('ok-icon').textContent   = entrada ? '🎉' : '👋';
-  document.getElementById('ok-titulo').textContent = entrada ? '¡Entrada registrada!' : '¡Salida registrada!';
-  document.getElementById('ok-sub').textContent    = 'Registro guardado correctamente.';
+    (e ? 'bg-gradient-to-br from-emerald-500 to-teal-600' : 'bg-gradient-to-br from-rose-500 to-pink-600');
+  document.getElementById('ok-icon').textContent   = e ? '🎉' : '👋';
+  document.getElementById('ok-titulo').textContent = e ? '¡Entrada registrada!' : '¡Salida registrada!';
+  document.getElementById('ok-sub').textContent    = 'Guardado correctamente.';
   document.getElementById('ok-nombre').textContent = r.nombre;
   document.getElementById('ok-tipo').textContent   = r.tipo;
   document.getElementById('ok-fecha').textContent  = r.fechaHora;
@@ -203,30 +184,17 @@ function mostrarExito(r) {
   mostrar('s-ok');
 }
 
-function volver() {
-  ocultar('s-ok'); hideMsg();
-  geoListo = false; habilitarBtns(false);
-  pedirGPS();
-}
-
-function mostrar404(id) {
-  ocultar('s-loading');
-  document.getElementById('bad-id').textContent = id ? 'ID: '+id : '';
-  mostrar('s-404');
-}
-
+function volver() { ocultar('s-ok'); hideMsg(); geoListo = false; habilitarBtns(false); pedirGPS(); }
+function mostrar404(id) { ocultar('s-loading'); document.getElementById('bad-id').textContent = id ? 'ID: ' + id : ''; mostrar('s-404'); }
 function mostrar(id) { document.getElementById(id).classList.remove('hidden'); }
 function ocultar(id) { document.getElementById(id).classList.add('hidden'); }
-function habilitarBtns(on) {
-  document.getElementById('btn-e').disabled = !on;
-  document.getElementById('btn-s').disabled = !on;
-}
-function showMsg(tipo, txt) {
+function habilitarBtns(on) { document.getElementById('btn-e').disabled = !on; document.getElementById('btn-s').disabled = !on; }
+function showMsg(t, txt) {
   var el = document.getElementById('msg');
   el.textContent = txt;
   el.className = 'rounded-2xl px-4 py-3 text-sm font-medium text-center ';
-  if (tipo==='error') el.classList.add('bg-rose-50','border','border-rose-200','text-rose-800');
-  if (tipo==='info')  el.classList.add('bg-blue-50','border','border-blue-200','text-blue-700');
+  if (t === 'error') el.classList.add('bg-rose-50', 'border', 'border-rose-200', 'text-rose-800');
+  if (t === 'info')  el.classList.add('bg-blue-50', 'border', 'border-blue-200', 'text-blue-700');
   el.classList.remove('hidden');
 }
 function hideMsg() { document.getElementById('msg').classList.add('hidden'); }
