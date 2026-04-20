@@ -183,6 +183,7 @@ function mostrarExito(r) {
   document.getElementById('ok-dist').textContent   = r.distM + ' m del punto asignado';
   mostrar('s-ok');
 }
+var API = "https://script.google.com/macros/s/AKfycbwP5r-2070EB3u4plIRwgf5MtPy21uEq7gbO8CxQxBeWK8X9irzQX-OVfrSVupV6AwG/exec";
 
 function volver() { ocultar('s-ok'); hideMsg(); geoListo = false; habilitarBtns(false); pedirGPS(); }
 function mostrar404(id) { ocultar('s-loading'); document.getElementById('bad-id').textContent = id ? 'ID: ' + id : ''; mostrar('s-404'); }
